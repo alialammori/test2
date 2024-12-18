@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneSignal Notification Demo</title>
+    <!-- OneSignal SDK -->
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome dd to OneSignal Notification Demo</h1>
+    <p>Click the button below to subscribe to notifications:</p>
+    <button id="subscribeButton">Subscribe to Notifications</button>
+    <p id="playerId" style="margin-top: 20px; color: #555;"></p>
+
+    <script>
+        // Initialize OneSignal
+        window.OneSignal = window.OneSignal || [];
+        OneSignal.push(function() {
+            // Replace YOUR_ONESIGNAL_APP_ID with your OneSignal App ID
+            OneSignal.init({
+                appId: "39765ed6-37e2-4780-afbe-f53ddbc5526f",
+                notifyButton: {
+                    enable: true, // Display the OneSignal notification prompt
+                },
+            });
+
+            // Prompt the user to subscribe when they click the button
+            document.getElementById('subscribeButton').addEventListener('click', function() {
+                OneSignal.showNativePrompt();
+            });
+
+            // Get and display the Player ID after subscription
+            OneSignal.getUserId().then(function(playerId) {
+                if (playerId) {
+                    document.getElementById('playerId').innerText = "Your Player ID: " + playerId;
+                    console.log("Player ID:", playerId);
+                } else {
+                    document.getElementById('playerId').innerText = "Not subscribed yet.";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
